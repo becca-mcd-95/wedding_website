@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import NameForm
 from .models import Guest
 
@@ -16,3 +16,7 @@ def index(request):
         form = NameForm()
     context = {"form": form, "matches": matches}
     return render(request, "rsvp/index.html", context)
+
+def confirm(request, guest_id):
+    guest = get_object_or_404(Guest, pk=guest_id)
+    return render(request, "rsvp/confirm.html", {"guest": guest})
