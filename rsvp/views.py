@@ -1,17 +1,18 @@
 from django.shortcuts import render
 from .forms import NameForm
+from .models import Guest
 
 # Create your views here.
 
 def index(request):
-    searched_name = ""
+    matches = None
     if request.method == "POST":
         form = NameForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data["first_name"]
             surname = form.cleaned_data["surname"]
-            searched_name = f"{first_name} {surname}"
+            matches = Guest.objects.filter(first_name__icontains=first_name, surname__icontains=surname)
     else:
         form = NameForm()
-    context = {"form": form, "searched_name": searched_name}
+    context = {"form": form, "matches": matches}
     return render(request, "rsvp/index.html", context)
