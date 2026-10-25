@@ -2,3 +2,8 @@
 {% for person in guest.household.guests.all %}
     <p>{{ person }}</p>
 {% endfor %}
+<form method="post">
+    {% csrf_token %}
+    {{ formset }}
+    <input type="submit" value="Send my reply">
+</form>

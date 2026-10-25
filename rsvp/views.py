@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NameForm
+from .forms import NameForm, ReplyFormSet
 from .models import Guest
 
 # Create your views here.
@@ -32,4 +32,5 @@ def reply(request):
     if guest_id is None:
         return redirect("index")
     guest = get_object_or_404(Guest, pk=guest_id)
-    return render(request,"rsvp/reply.html", {"guest": guest})
+    formset = ReplyFormSet(instance=guest.household)
+    return render(request,"rsvp/reply.html", {"guest": guest, "formset": formset})
