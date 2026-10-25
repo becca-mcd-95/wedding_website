@@ -6,9 +6,9 @@
     <input type="submit" value="Find my invite">
 </form>
 {% if matches is not None %}
-    {% for guest in matches %}
-        <p>{{ guest }}</p>
-    {% empty %}
+    {% if matches %}
+        <p>There's more than one guest with that name, please get in touch with us...</p>
+    {% else %}
         <p>Sorry we couldn't find you, please get in touch with us...</p>
-    {% endfor %}
+    {% endif %}
 {% endif %}
