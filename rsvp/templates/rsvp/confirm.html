@@ -1,3 +1,5 @@
 <h1>Is this you?</h1>
 <p>{{ guest }}</p>
 <p>Your invite: {{ guest.household.get_invite_type_display }}</p>
+<p><a href="{% url 'reply' %}">Yes that's me!</a></p>
+<p><a href="{% url 'index' %}">Not you? Search again</a></p>

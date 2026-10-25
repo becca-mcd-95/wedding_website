@@ -26,3 +26,10 @@ def confirm(request):
         return redirect("index")
     guest = get_object_or_404(Guest, pk=guest_id)
     return render(request, "rsvp/confirm.html", {"guest": guest})
+
+def reply(request):
+    guest_id = request.session.get("guest_id")
+    if guest_id is None:
+        return redirect("index")
+    guest = get_object_or_404(Guest, pk=guest_id)
+    return render(request,"rsvp/reply.html", {"guest": guest})
