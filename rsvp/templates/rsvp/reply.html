@@ -4,6 +4,10 @@
 {% endfor %}
 <form method="post">
     {% csrf_token %}
-    {{ formset }}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {{ form.id }}
+        <p>{{ form.instance }}: {{form.reply_status}}</p>
+    {% endfor %}
     <input type="submit" value="Send my reply">
 </form>
