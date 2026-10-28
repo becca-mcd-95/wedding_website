@@ -36,7 +36,10 @@ def reply(request):
         formset = ReplyFormSet(request.POST, instance=guest.household)
         if formset.is_valid():
             formset.save()
-            return redirect("reply")
+            return redirect("thanks")
     else:
         formset = ReplyFormSet(instance=guest.household)
     return render(request,"rsvp/reply.html", {"guest": guest, "formset": formset})
+
+def thanks(request):
+    return render(request, "rsvp/thanks.html")
