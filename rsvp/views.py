@@ -32,5 +32,11 @@ def reply(request):
     if guest_id is None:
         return redirect("index")
     guest = get_object_or_404(Guest, pk=guest_id)
-    formset = ReplyFormSet(instance=guest.household)
+    if request.method == "POST":
+        formset = ReplyFormSet(request.POST, instance=guest.household)
+        if formset.is_valid():
+            formset.save()
+            return redirect("reply")
+    else:
+        formset = ReplyFormSet(instance=guest.household)
     return render(request,"rsvp/reply.html", {"guest": guest, "formset": formset})
