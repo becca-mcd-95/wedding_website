@@ -64,3 +64,15 @@ input[type="submit"], .button {
 a {
     color: var(--burgundy);
 }
+
+.progress {
+    height: 6px;
+    background: var(--blush);
+    border-radius: 999px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--olive);
+    border-radius: 999px;
+}

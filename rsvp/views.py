@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NameForm, ReplyFormSet, DietFormSet, CoachFormSet, AccommodationFormSet, ExtrasForm
 from .models import Guest
 
+TOTAL_STEPS = 5
+
 # Create your views here.
 
 def get_session_guest(request):
@@ -46,7 +48,7 @@ def reply(request):
             return redirect("thanks")
     else:
         formset = ReplyFormSet(instance=guest.household)
-    return render(request,"rsvp/reply.html", {"guest": guest, "formset": formset})
+    return render(request,"rsvp/reply.html", {"guest": guest, "formset": formset, "step": 1, "total_steps": TOTAL_STEPS})
 
 def thanks(request):
     return render(request, "rsvp/thanks.html")
@@ -63,7 +65,7 @@ def dietary(request):
             return redirect("accommodation")
     else:
         formset = DietFormSet(queryset=attending, instance=guest.household)
-    return render(request, "rsvp/dietary.html", {"guest": guest, "formset": formset})
+    return render(request, "rsvp/dietary.html", {"guest": guest, "formset": formset,  "step": 2, "total_steps": TOTAL_STEPS})
 
 def coach(request):
     guest = get_session_guest(request)
@@ -77,7 +79,7 @@ def coach(request):
             return redirect("extras")
     else: 
         formset = CoachFormSet(queryset=attending, instance=guest.household)
-    return render(request, "rsvp/coach.html", {"guest": guest, "formset": formset})
+    return render(request, "rsvp/coach.html", {"guest": guest, "formset": formset,  "step": 4, "total_steps": TOTAL_STEPS})
 
 def accommodation(request):
     guest = get_session_guest(request)
@@ -94,10 +96,10 @@ def accommodation(request):
             return redirect("coach")
     else: 
         formset = AccommodationFormSet(queryset=attending, instance=guest.household)
-    return render(request, "rsvp/accommodation.html", {"guest": guest, "formset": formset})
+    return render(request, "rsvp/accommodation.html", {"guest": guest, "formset": formset,  "step": 3, "total_steps": TOTAL_STEPS})
 
 def stay(request):
-    return render(request, "rsvp/stay.html")
+    return render(request, "rsvp/stay.html", {"step": 3, "total_steps": TOTAL_STEPS})
 
 def extras(request):
     guest = get_session_guest(request)
@@ -110,4 +112,4 @@ def extras(request):
             return redirect("thanks")
     else: 
         form = ExtrasForm(instance=guest.household)
-    return render(request, "rsvp/extras.html", {"guest": guest, "form": form})
+    return render(request, "rsvp/extras.html", {"guest": guest, "form": form,  "step": 5, "total_steps": TOTAL_STEPS})

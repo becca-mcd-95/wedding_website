@@ -10,7 +10,12 @@
 </head>
 <body>
     <header>B &amp; R</header>
-
+    {% if step %}
+        <p>Step {{ step }} of {{ total_steps }}</p>
+        <div class="progress">
+            <div class="progress-fill" style="width: {% widthratio step total_steps 100 %}%"></div>
+        </div>
+    {% endif %}
     {% block content %}{% endblock %}
 </body>
 </html>
