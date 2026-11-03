@@ -40,3 +40,8 @@ AccommodationFormSet = inlineformset_factory(
     extra=0,
     can_delete=False,
 )
+
+class ExtrasForm(forms.ModelForm):
+    class Meta:
+        model = Household
+        fields = ["comments", "email"]

@@ -13,6 +13,9 @@ class Household(models.Model):
         choices=InviteType,
     )
 
+    comments = models.TextField(blank=True, max_length=500)
+    email = models.EmailField(blank=True)
+
     def __str__(self):
         return self.name
 

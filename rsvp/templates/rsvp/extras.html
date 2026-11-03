@@ -1,0 +1,8 @@
+<h1>Anything else?</h1>
+<p>Leave us a message, and add an email address if you'd like the wedding album when it's ready.</p>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Send my RSVP">
+</form>
