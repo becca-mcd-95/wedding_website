@@ -23,3 +23,12 @@ DietFormSet = inlineformset_factory(
     extra=0,
     can_delete=False,
 )
+
+CoachFormSet = inlineformset_factory(
+    Household,
+    Guest,
+    fields=["coach"],
+    widgets={"coach": forms.RadioSelect},
+    extra=0,
+    can_delete=False,
+)

@@ -8,4 +8,5 @@ urlpatterns = [
     path("reply/", views.reply, name="reply"),
     path("thank-you/", views.thanks, name="thanks"),
     path("dietary/", views.dietary, name="dietary"),
+    path("coach/", views.coach, name="coach"),
 ]
