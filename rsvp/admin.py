@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Household, Guest
+from .models import Household, Guest, DietaryRequirement
 
 class GuestInLine(admin.TabularInline):
     model = Guest
@@ -15,3 +15,4 @@ class HouseHoldAdmin(admin.ModelAdmin):
 
 admin.site.register(Household, HouseHoldAdmin)
 admin.site.register(Guest, GuestAdmin)
+admin.site.register(DietaryRequirement)

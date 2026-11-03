@@ -16,11 +16,20 @@ class Household(models.Model):
     def __str__(self):
         return self.name
 
+class DietaryRequirement(models.Model):
+    name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
+
 class Guest(models.Model):
     household = models.ForeignKey(Household, on_delete=models.CASCADE, related_name="guests")
     first_name = models.CharField(max_length=60)
     surname = models.CharField(max_length=60)
     needs_own_rsvp = models.BooleanField(default=True)
+    diets = models.ManyToManyField(DietaryRequirement, blank=True)
+    dietary_notes = models.TextField(blank=True, max_length=300)
+
     class Status(models.TextChoices):
         YES = "Y", "Yes"
         NO = "N", "No"
