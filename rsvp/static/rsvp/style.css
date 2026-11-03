@@ -15,6 +15,7 @@ body {
     max-width: 480px;
     margin: 0 auto;
     padding: 24px;
+    accent-color: var(--olive);
 
 }
 
@@ -28,4 +29,38 @@ header {
     font-size: 28px;
     color: var(--olive);
 
+}
+
+label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+input[type="text"], input[type="email"], textarea, select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1.5px solid var(--blush);
+    border-radius: 12px;
+    background: var(--ivory);
+    font: inherit;
+    margin-bottom: 16px;
+    
+}
+
+input[type="submit"], .button {
+    background: var(--burgundy);
+    color: var(--ivory);
+    border: none;
+    border-radius: 999px;
+    padding: 14px 28px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none;
+}
+
+a {
+    color: var(--burgundy);
 }

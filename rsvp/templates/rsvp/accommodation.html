@@ -7,8 +7,11 @@
     {% for form in formset %}
         {{ form.id }}
         <h2>{{ form.instance }}</h2>
-        <div>{{form.needs_accommodation}}</div>
+        <label>
+        {{form.needs_accommodation}}
+        Yes, I'll need somewhere to stay
+        </label>
     {% endfor %}
-    <input type="submit" value="Submit">
+    <input type="submit" value="Continue">
 </form>
 {% endblock %}
