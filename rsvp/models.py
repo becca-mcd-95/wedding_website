@@ -29,6 +29,7 @@ class Guest(models.Model):
     needs_own_rsvp = models.BooleanField(default=True)
     diets = models.ManyToManyField(DietaryRequirement, blank=True)
     dietary_notes = models.TextField(blank=True, max_length=300)
+    needs_accommodation = models.BooleanField(default=False)
 
     class Status(models.TextChoices):
         YES = "Y", "Yes"
