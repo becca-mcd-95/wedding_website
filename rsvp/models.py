@@ -41,5 +41,17 @@ class Guest(models.Model):
         default=Status.NOT_REPLIED
     )
 
+    class Coach(models.TextChoices):
+        NO = "N", "Not required"
+        DOWN = "D", "Just to the reception"
+        UP = "U", "Just returning from reception"
+        BOTH = "B", "Both ways"
+
+    coach = models.CharField(
+        max_length=1,
+        choices=Coach,
+        default=Coach.NO
+    )
+
     def __str__(self):
         return f"{self.first_name} {self.surname}"
