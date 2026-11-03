@@ -89,3 +89,7 @@ a {
 }
 
 .card h2 { margin-top: 0; }
+
+.centred {
+    text-align: center;
+}
