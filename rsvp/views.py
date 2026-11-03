@@ -4,6 +4,12 @@ from .models import Guest
 
 # Create your views here.
 
+def get_session_guest(request):
+    guest_id = request.session.get("guest_id")
+    if guest_id is None:
+        return None
+    return get_object_or_404(Guest, pk=guest_id)
+
 def index(request):
     matches = None
     if request.method == "POST":
@@ -21,17 +27,15 @@ def index(request):
     return render(request, "rsvp/index.html", context)
 
 def confirm(request):
-    guest_id = request.session.get("guest_id")
-    if guest_id is None:
+    guest = get_session_guest(request)
+    if guest is None:
         return redirect("index")
-    guest = get_object_or_404(Guest, pk=guest_id)
     return render(request, "rsvp/confirm.html", {"guest": guest})
 
 def reply(request):
-    guest_id = request.session.get("guest_id")
-    if guest_id is None:
+    guest = get_session_guest(request)
+    if guest is None:
         return redirect("index")
-    guest = get_object_or_404(Guest, pk=guest_id)
     if request.method == "POST":
         formset = ReplyFormSet(request.POST, instance=guest.household)
         if formset.is_valid():
@@ -48,10 +52,9 @@ def thanks(request):
     return render(request, "rsvp/thanks.html")
 
 def dietary(request):
-    guest_id = request.session.get("guest_id")
-    if guest_id is None:
+    guest = get_session_guest(request)
+    if guest is None:
         return redirect("index")
-    guest = get_object_or_404(Guest, pk=guest_id)
     attending = guest.household.guests.filter(reply_status=Guest.Status.YES)
     if request.method == "POST":
         formset = DietFormSet(request.POST, queryset=attending, instance=guest.household)
@@ -63,10 +66,9 @@ def dietary(request):
     return render(request, "rsvp/dietary.html", {"guest": guest, "formset": formset})
 
 def coach(request):
-    guest_id = request.session.get("guest_id")
-    if guest_id is None:
+    guest = get_session_guest(request)
+    if guest is None:
         return redirect("index")
-    guest = get_object_or_404(Guest, pk=guest_id)
     attending = guest.household.guests.filter(reply_status=Guest.Status.YES)
     if request.method == "POST":
         formset = CoachFormSet(request.POST, queryset=attending, instance=guest.household)
@@ -78,10 +80,9 @@ def coach(request):
     return render(request, "rsvp/coach.html", {"guest": guest, "formset": formset})
 
 def accommodation(request):
-    guest_id = request.session.get("guest_id")
-    if guest_id is None:
+    guest = get_session_guest(request)
+    if guest is None:
         return redirect("index")
-    guest = get_object_or_404(Guest, pk=guest_id)
     attending = guest.household.guests.filter(reply_status=Guest.Status.YES)
     if request.method == "POST":
         formset = AccommodationFormSet(request.POST, queryset=attending, instance=guest.household)
@@ -99,10 +100,9 @@ def stay(request):
     return render(request, "rsvp/stay.html")
 
 def extras(request):
-    guest_id = request.session.get("guest_id")
-    if guest_id is None:
+    guest = get_session_guest(request)
+    if guest is None:
         return redirect("index")
-    guest = get_object_or_404(Guest, pk=guest_id)
     if request.method == "POST":
         form = ExtrasForm(request.POST, instance=guest.household)
         if form.is_valid():
