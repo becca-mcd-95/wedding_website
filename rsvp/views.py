@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NameForm, ReplyFormSet, DietFormSet, CoachFormSet
+from .forms import NameForm, ReplyFormSet, DietFormSet, CoachFormSet, AccommodationFormSet
 from .models import Guest
 
 # Create your views here.
@@ -57,7 +57,7 @@ def dietary(request):
         formset = DietFormSet(request.POST, queryset=attending, instance=guest.household)
         if formset.is_valid():
             formset.save()
-            return redirect("coach")
+            return redirect("accommodation")
     else:
         formset = DietFormSet(queryset=attending, instance=guest.household)
     return render(request, "rsvp/dietary.html", {"guest": guest, "formset": formset})
@@ -76,3 +76,24 @@ def coach(request):
     else: 
         formset = CoachFormSet(queryset=attending, instance=guest.household)
     return render(request, "rsvp/coach.html", {"guest": guest, "formset": formset})
+
+def accommodation(request):
+    guest_id = request.session.get("guest_id")
+    if guest_id is None:
+        return redirect("index")
+    guest = get_object_or_404(Guest, pk=guest_id)
+    attending = guest.household.guests.filter(reply_status=Guest.Status.YES)
+    if request.method == "POST":
+        formset = AccommodationFormSet(request.POST, queryset=attending, instance=guest.household)
+        if formset.is_valid():
+            formset.save()
+            needs_stay = attending.filter(needs_accommodation=True)
+            if needs_stay.exists():
+                return redirect("stay")
+            return redirect("coach")
+    else: 
+        formset = AccommodationFormSet(queryset=attending, instance=guest.household)
+    return render(request, "rsvp/accommodation.html", {"guest": guest, "formset": formset})
+
+def stay(request):
+    return render(request, "rsvp/stay.html")

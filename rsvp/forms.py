@@ -32,3 +32,11 @@ CoachFormSet = inlineformset_factory(
     extra=0,
     can_delete=False,
 )
+
+AccommodationFormSet = inlineformset_factory(
+    Household,
+    Guest,
+    fields=["needs_accommodation"],
+    extra=0,
+    can_delete=False,
+)
