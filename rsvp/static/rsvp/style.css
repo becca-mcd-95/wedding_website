@@ -1,0 +1,21 @@
+:root {
+
+    --warm-cream: #f6f0e6;
+    --ivory: #fffcf6;
+    --burgundy: #6e1e2e;
+    --olive: #5e6b2e;
+    --blush: #d9a7ac;
+    --nearly-black: #2b2a26;
+}
+
+body {
+    background-color: var(--warm-cream);
+    color: var(--nearly-black);
+    font-family: 'Karla', sans-serif;
+
+}
+
+h1, h2 {
+    color: var(--burgundy);
+    font-family: 'Cormorant Garamond', serif;
+}
