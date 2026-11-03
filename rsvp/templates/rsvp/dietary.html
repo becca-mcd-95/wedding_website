@@ -1,0 +1,12 @@
+<h1>Any dietary requirements? </h1>
+<form method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {{ form.id }}
+        <h2>{{ form.instance }}</h2>
+        <div>{{form.diets}}</div>
+        <div>{{form.dietary_notes}}</div>
+    {% endfor %}
+    <input type="submit" value="Send my dietary requirements">
+</form>

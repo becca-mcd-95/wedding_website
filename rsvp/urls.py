@@ -7,4 +7,5 @@ urlpatterns = [
     path("confirm/", views.confirm, name="confirm"),
     path("reply/", views.reply, name="reply"),
     path("thank-you/", views.thanks, name="thanks"),
+    path("dietary/", views.dietary, name="dietary"),
 ]

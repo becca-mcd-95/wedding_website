@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NameForm, ReplyFormSet
+from .forms import NameForm, ReplyFormSet, DietFormSet
 from .models import Guest
 
 # Create your views here.
@@ -36,6 +36,9 @@ def reply(request):
         formset = ReplyFormSet(request.POST, instance=guest.household)
         if formset.is_valid():
             formset.save()
+            attending = guest.household.guests.filter(reply_status=Guest.Status.YES)
+            if attending.exists():
+                return redirect("dietary")
             return redirect("thanks")
     else:
         formset = ReplyFormSet(instance=guest.household)
@@ -43,3 +46,18 @@ def reply(request):
 
 def thanks(request):
     return render(request, "rsvp/thanks.html")
+
+def dietary(request):
+    guest_id = request.session.get("guest_id")
+    if guest_id is None:
+        return redirect("index")
+    guest = get_object_or_404(Guest, pk=guest_id)
+    attending = guest.household.guests.filter(reply_status=Guest.Status.YES)
+    if request.method == "POST":
+        formset = DietFormSet(request.POST, queryset=attending, instance=guest.household)
+        if formset.is_valid():
+            formset.save()
+            return redirect("thanks")
+    else:
+        formset = DietFormSet(queryset=attending, instance=guest.household)
+    return render(request, "rsvp/dietary.html", {"guest": guest, "formset": formset})

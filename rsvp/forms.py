@@ -14,3 +14,12 @@ ReplyFormSet = inlineformset_factory(
     extra=0,
     can_delete=False,
     )
+
+DietFormSet = inlineformset_factory(
+    Household,
+    Guest,
+    fields=["diets", "dietary_notes"],
+    widgets={"diets": forms.CheckboxSelectMultiple},
+    extra=0,
+    can_delete=False,
+)
