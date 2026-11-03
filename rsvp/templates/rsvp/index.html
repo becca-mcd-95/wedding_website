@@ -1,4 +1,5 @@
-<h1>This is a placeholder</h1>
+{% extends "rsvp/base.html" %}
+{% block content %}
 
 <form method="post">
     {% csrf_token %}
@@ -12,3 +13,5 @@
         <p>Sorry we couldn't find you, please get in touch with us...</p>
     {% endif %}
 {% endif %}
+
+{% endblock %}
