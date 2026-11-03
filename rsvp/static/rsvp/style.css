@@ -6,6 +6,7 @@
     --olive: #5e6b2e;
     --blush: #d9a7ac;
     --nearly-black: #2b2a26;
+    --line: #e8dfcf;
 }
 
 body {
@@ -48,6 +49,8 @@ input[type="text"], input[type="email"], textarea, select {
     
 }
 
+textarea { height: 100px; }
+
 input[type="submit"], .button {
     background: var(--burgundy);
     color: var(--ivory);
@@ -76,3 +79,13 @@ a {
     background: var(--olive);
     border-radius: 999px;
 }
+
+.card {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 18px;
+    margin-bottom: 16px;
+}
+
+.card h2 { margin-top: 0; }

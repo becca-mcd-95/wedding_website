@@ -5,8 +5,10 @@
     {% csrf_token %}
     {{ formset.management_form }}
     {% for form in formset %}
-        {{ form.id }}
-        <p>{{ form.instance }}: {{form.reply_status}}</p>
+        <div class="card">
+            {{ form.id }}
+            <p>{{ form.instance }}: {{form.reply_status}}</p>
+        </div>
     {% endfor %}
     <input type="submit" value="Send my reply">
 </form>

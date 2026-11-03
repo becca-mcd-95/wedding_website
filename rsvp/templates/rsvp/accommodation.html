@@ -4,14 +4,16 @@
 <form method="post">
     {% csrf_token %}
     {{ formset.management_form }}
-    {% for form in formset %}
-        {{ form.id }}
-        <h2>{{ form.instance }}</h2>
-        <label>
-        {{form.needs_accommodation}}
-        Yes, I'll need somewhere to stay
-        </label>
-    {% endfor %}
+        {% for form in formset %}
+            <div class="card">
+                {{ form.id }}
+                <h2>{{ form.instance }}</h2>
+                <label>
+                {{form.needs_accommodation}}
+                Yes, I'll need somewhere to stay
+                </label>
+            </div>
+        {% endfor %}
     <input type="submit" value="Continue">
 </form>
 {% endblock %}

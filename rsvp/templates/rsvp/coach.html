@@ -5,9 +5,11 @@
     {% csrf_token %}
     {{ formset.management_form }}
     {% for form in formset %}
-        {{ form.id }}
-        <h2>{{ form.instance }}</h2>
-        <div>{{form.coach}}</div>
+        <div class="card">
+            {{ form.id }}
+            <h2>{{ form.instance }}</h2>
+            <div>{{form.coach}}</div>
+        </div>
     {% endfor %}
     <input type="submit" value="Continue">
 </form>

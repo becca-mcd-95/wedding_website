@@ -5,10 +5,13 @@
     {% csrf_token %}
     {{ formset.management_form }}
     {% for form in formset %}
-        {{ form.id }}
-        <h2>{{ form.instance }}</h2>
-        <div>{{form.diets}}</div>
-        <div>{{form.dietary_notes}}</div>
+        <div class="card">
+            {{ form.id }}
+            <h2>{{ form.instance }}</h2>
+            <div>{{form.diets}}</div>
+            <label for="{{ form.dietary_notes.id_for_label }}">Allergies, or anything else we should know?</label>
+            <div>{{form.dietary_notes}}</div>
+        </div>
     {% endfor %}
     <input type="submit" value="Send my dietary requirements">
 </form>
