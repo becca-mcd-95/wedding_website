@@ -1,0 +1,27 @@
+{% extends "rsvp/base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Welcome</h1>
+  <p>We can't wait to celebrate with you. Everything you need to know is below.</p>
+</div>
+
+<p>
+  <a href="{% url 'index' %}" class="button">RSVP</a>
+</p>
+
+<section id="schedule" class="card">
+  <h2>Schedule</h2>
+  <p>Timings to follow.</p>
+</section>
+
+<section id="getting-there" class="card">
+  <h2>Getting there</h2>
+  <p>Lochgreen House Hotel, Monktonhill Road, Troon.</p>
+</section>
+
+<section id="faqs" class="card">
+  <h2>FAQs</h2>
+  <p>Questions and answers to follow.</p>
+</section>
+
+{% endblock %}

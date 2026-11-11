@@ -45,3 +45,6 @@ class ExtrasForm(forms.ModelForm):
     class Meta:
         model = Household
         fields = ["comments", "email"]
+
+class SitePasswordForm(forms.Form):
+    password = forms.CharField(label="Password from your invite")

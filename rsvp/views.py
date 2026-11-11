@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import NameForm, ReplyFormSet, DietFormSet, CoachFormSet, AccommodationFormSet, ExtrasForm
+from .forms import NameForm, ReplyFormSet, DietFormSet, CoachFormSet, AccommodationFormSet, ExtrasForm, SitePasswordForm
 from .models import Guest
+from django.conf import settings 
 
 TOTAL_STEPS = 5
 
@@ -112,4 +113,19 @@ def extras(request):
             return redirect("thanks")
     else: 
         form = ExtrasForm(instance=guest.household)
-    return render(request, "rsvp/extras.html", {"guest": guest, "form": form,  "step": 5, "total_steps": TOTAL_STEPS})
+
+def info(request):
+    return render(request, "rsvp/info.html")
+
+def site_password(request):
+    if request.method == "POST":
+        form = SitePasswordForm(request.POST)
+        if form.is_valid():
+            typed = form.cleaned_data["password"].strip().lower()
+            if typed == settings.SITE_PASSWORD.lower():
+                request.session["site_unlocked"] = True
+                return redirect("info")
+            form.add_error("password", "That doesn't match the password on your invite.")
+        else:
+            form = SitePasswordForm()
+        return render(request, "rsvp/site_password.html", {"form": form})
