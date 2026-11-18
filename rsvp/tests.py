@@ -10,6 +10,9 @@ class NameLookupTests(TestCase):
         invite_type = Household.InviteType.ALL_DAY
         household = Household.objects.create(name="Fake", invite_type=invite_type)
         Guest.objects.create(first_name="Mia", surname="Fake", household=household)
+        session = self.client.session
+        session["site_unlocked"] = True
+        session.save()
 
     def test_known_name_redirects_to_confirm(self):
         response = self.client.post(
@@ -35,6 +38,9 @@ class ReplyPageTest(TestCase):
             name="Fake", invite_type=Household.InviteType.ALL_DAY)
         self.guest = Guest.objects.create(
             first_name="Mia", surname="Fake", household=household)
+        session = self.client.session
+        session["site_unlocked"] = True
+        session.save()
 
     def search_for_guest(self):
         self.client.post(
