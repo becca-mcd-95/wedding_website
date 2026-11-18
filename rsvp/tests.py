@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 from .models import Household, Guest
 
@@ -74,3 +74,17 @@ class ReplyPageTest(TestCase):
         self.search_for_guest()
         response = self.client.post(reverse("reply"), self.reply_data("N"))
         self.assertRedirects(response, reverse("thanks")) 
+
+class SitePasswordTests(TestCase):
+    def test_locked_visitor_redirected_to_password(self):
+        response = self.client.get(
+            reverse("info")
+        )
+        self.assertRedirects(response, reverse("site_password"))
+
+    @override_settings(SITE_PASSWORD="test-password")
+    def test_correct_password_redirects_to_info(self):
+        response = self.client.post(
+            reverse("site_password"), {"password": "test-password"}
+        )
+        self.assertRedirects(response, reverse("info"))
