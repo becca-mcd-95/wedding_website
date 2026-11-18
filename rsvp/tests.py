@@ -16,7 +16,7 @@ class NameLookupTests(TestCase):
 
     def test_known_name_redirects_to_confirm(self):
         response = self.client.post(
-            reverse("index"),
+            reverse("search"),
             {"first_name": "Mia", "surname": "Fake"}
         )
         self.assertRedirects(
@@ -26,7 +26,7 @@ class NameLookupTests(TestCase):
 
     def test_unknown_name_shows_message(self):
         response = self.client.post(
-            reverse("index"),
+            reverse("search"),
             {"first_name": "Nobody", "surname": "Here"},
         )
         self.assertContains(response, "couldn't find you")
@@ -44,7 +44,7 @@ class ReplyPageTest(TestCase):
 
     def search_for_guest(self):
         self.client.post(
-            reverse("index"),
+            reverse("search"),
             {"first_name": "Mia", "surname": "Fake"},
         )
 
@@ -56,13 +56,13 @@ class ReplyPageTest(TestCase):
             "guests-0-reply_status": answer,
         }
 
-    def test_reply_without_search_redirects_to_index(self):
+    def test_reply_without_search_redirects_to_search(self):
         response = self.client.get(
             reverse("reply")
         )
         self.assertRedirects(
             response,
-            reverse("index")
+            reverse("search")
         )
 
     def test_attending_reply_redirects_to_dietary(self):
