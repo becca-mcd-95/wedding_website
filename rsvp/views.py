@@ -113,6 +113,7 @@ def extras(request):
             return redirect("thanks")
     else: 
         form = ExtrasForm(instance=guest.household)
+    return render(request, "rsvp/extras.html", {"guest": guest, "form": form,  "step": 5, "total_steps": TOTAL_STEPS})
 
 def info(request):
     return render(request, "rsvp/info.html")

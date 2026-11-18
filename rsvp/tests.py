@@ -31,7 +31,7 @@ class NameLookupTests(TestCase):
         )
         self.assertContains(response, "couldn't find you")
 
-class ReplyPageTest(TestCase):
+class RsvpFlowTest(TestCase):
 
     def setUp(self):
         household = Household.objects.create(
@@ -73,7 +73,68 @@ class ReplyPageTest(TestCase):
     def test_declined_reply_redirects_to_thanks(self):
         self.search_for_guest()
         response = self.client.post(reverse("reply"), self.reply_data("N"))
-        self.assertRedirects(response, reverse("thanks")) 
+        self.assertRedirects(response, reverse("thanks"))
+
+    def dietary_data(self):
+        return {
+            "guests-TOTAL_FORMS": "1",
+            "guests-INITIAL_FORMS": "1",
+            "guests-0-id": self.guest.id,
+            "guests-0-dietary_notes": "",
+        } 
+
+    def test_dietary_redirects_to_accommodation(self):
+        self.search_for_guest()
+        self.guest.reply_status = "Y"
+        self.guest.save()
+        response = self.client.post(reverse("dietary"), self.dietary_data())
+        self.assertRedirects(response, reverse("accommodation"))
+
+    def accommodation_data(self, needs):
+        data = {
+            "guests-TOTAL_FORMS": "1",
+            "guests-INITIAL_FORMS": "1",
+            "guests-0-id": self.guest.id,
+        }
+        if needs:
+            data["guests-0-needs_accommodation"] = "on"
+        return data
+
+    def test_needs_accommodation_redirects_to_stay(self):
+        self.search_for_guest()
+        self.guest.reply_status = "Y"
+        self.guest.save()
+        response = self.client.post(reverse("accommodation"), self.accommodation_data(True))
+        self.assertRedirects(response, reverse("stay"))
+
+    def test_no_accommodation_redirects_to_coach(self):
+        self.search_for_guest()
+        self.guest.reply_status = "Y"
+        self.guest.save()
+        response = self.client.post(reverse("accommodation"), self.accommodation_data(False))
+        self.assertRedirects(response, reverse("coach"))
+
+    def coach_data(self, choice):
+        return {
+            "guests-TOTAL_FORMS": "1",
+            "guests-INITIAL_FORMS": "1",
+            "guests-0-id": self.guest.id,
+            "guests-0-coach": choice,
+        }
+
+    def test_coach_redirects_to_extras(self):
+        self.search_for_guest()
+        self.guest.reply_status = "Y"
+        self.guest.save()
+        response = self.client.post(reverse("coach"), self.coach_data(Guest.Coach.BOTH))
+        self.assertRedirects(response, reverse("extras"))
+
+    def test_extras_redirects_to_thanks(self):
+            self.search_for_guest()
+            self.guest.reply_status = "Y"
+            self.guest.save()
+            response = self.client.post(reverse("extras"), {"comments": "", "email": ""})
+            self.assertRedirects(response, reverse("thanks"))
 
 class SitePasswordTests(TestCase):
     def test_locked_visitor_redirected_to_password(self):
