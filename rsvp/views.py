@@ -126,6 +126,6 @@ def site_password(request):
                 request.session["site_unlocked"] = True
                 return redirect("info")
             form.add_error("password", "That doesn't match the password on your invite.")
-        else:
-            form = SitePasswordForm()
-        return render(request, "rsvp/site_password.html", {"form": form})
+    else:
+        form = SitePasswordForm()
+    return render(request, "rsvp/site_password.html", {"form": form})
