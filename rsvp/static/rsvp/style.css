@@ -62,12 +62,35 @@ input[type="submit"], .button {
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
 }
 
 .button-outline {
     background: transparent;
     color: var(--burgundy);
     border: 2px solid;
+}
+
+@media (hover: hover) {
+    input[type="submit"]:hover, .button:hover {
+        background: color-mix(in srgb, var(--burgundy) 80%, white);
+        border-color: color-mix(in srgb, var(--burgundy) 80%, white);
+    }
+
+    .button-outline:hover {
+        background: color-mix(in srgb, var(--burgundy) 10%, white);
+        border-color: var(--burgundy);
+    }
+}
+
+input[type="submit"]:active, .button:active {
+    background: color-mix(in srgb, var(--burgundy) 70%, white);
+    border-color: color-mix(in srgb, var(--burgundy) 70%, white);
+}
+
+.button-outline:active {
+    background: color-mix(in srgb, var(--burgundy) 20%, white);
+    border-color: var(--burgundy);
 }
 
 a {
@@ -109,7 +132,7 @@ a {
 }
 
 .guest-details {
-    border: 1px solid var(--burgundy);
+    border: 1px solid var(--line);
     border-radius: 16px;
     padding: 16px 20px;
     margin: 16px 0 24px;
@@ -128,4 +151,41 @@ a {
     color: var(--burgundy);
     background: var(--blush);
     border-radius: 15px;
+}
+
+label:has(input[type="radio"]) {
+    display: block;
+    border: 2px solid var(--olive);
+    border-radius: 999px;
+    padding: 12px 20px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+label:has(input:checked) {
+    background: var(--olive);
+    color: var(--ivory);
+}
+
+input[type="radio"]{
+    position: absolute;
+    opacity: 0;
+}
+
+.toggle {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border: 2px solid var(--olive);
+    border-radius: 999px;
+}
+
+.toggle > div {
+    flex: 1;
+}
+
+.toggle label:has(input[type="radio"]) {
+    border: none;
+    margin: 0;
+    text-align: center;
 }
