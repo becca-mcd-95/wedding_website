@@ -1,9 +1,11 @@
 from django.test import TestCase, override_settings
 from django.urls import reverse
 from .models import Household, Guest
+from datetime import date
 
 # Create your tests here.
 
+@override_settings(RSVP_DEADLINE=date(2100, 1, 1))
 class NameLookupTests(TestCase):
 
     def setUp(self):
@@ -31,6 +33,12 @@ class NameLookupTests(TestCase):
         )
         self.assertContains(response, "couldn't find you")
 
+    @override_settings(RSVP_DEADLINE=date(2000, 1, 1))
+    def test_search_after_deadline_shows_closed(self):
+        response = self.client.get(reverse("search"))
+        self.assertContains(response, "RSVPs have now closed")
+
+@override_settings(RSVP_DEADLINE=date(2100, 1, 1))
 class RsvpFlowTest(TestCase):
 
     def setUp(self):

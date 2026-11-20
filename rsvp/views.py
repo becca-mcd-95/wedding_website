@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NameForm, ReplyFormSet, DietFormSet, CoachFormSet, AccommodationFormSet, ExtrasForm, SitePasswordForm
 from .models import Guest
 from django.conf import settings 
+from django.utils import timezone
 
 TOTAL_STEPS = 5
 
@@ -14,6 +15,8 @@ def get_session_guest(request):
     return get_object_or_404(Guest, pk=guest_id)
 
 def search(request):
+    if timezone.localdate() > settings.RSVP_DEADLINE:
+        return render(request, "rsvp/closed.html")
     matches = None
     if request.method == "POST":
         form = NameForm(request.POST)
