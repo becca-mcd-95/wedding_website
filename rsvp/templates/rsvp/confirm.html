@@ -1,8 +1,14 @@
 {% extends "rsvp/base.html" %}
 {% block content %}
-<h1>Is this you?</h1>
-<p>{{ guest }}</p>
-<p>Your invite: {{ guest.household.get_invite_type_display }}</p>
-<p><a href="{% url 'reply' %}">Yes that's me!</a></p>
-<p><a href="{% url 'search' %}">Not you? Search again</a></p>
+<div class="card">
+    <h1>Is this you?</h1>
+    <div class="guest-details">
+        <p class="guest-name">{{ guest }}</p>
+        <span class="badge">
+            {{ guest.household.get_invite_type_display }}
+        </span>
+    </div>
+    <p><a class="button" href="{% url 'reply' %}">Yes that's me!</a></p>
+    <p><a class="button button-outline" href="{% url 'search' %}">Not you? Search again</a></p>
+</div>
 {% endblock %}
