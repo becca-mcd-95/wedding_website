@@ -31,7 +31,7 @@ class NameLookupTests(TestCase):
             reverse("search"),
             {"first_name": "Nobody", "surname": "Here"},
         )
-        self.assertContains(response, "couldn't find you")
+        self.assertContains(response, "couldn't find that name")
 
     @override_settings(RSVP_DEADLINE=date(2000, 1, 1))
     def test_search_after_deadline_shows_closed(self):

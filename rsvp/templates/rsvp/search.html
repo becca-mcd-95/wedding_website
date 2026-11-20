@@ -1,17 +1,21 @@
 {% extends "rsvp/base.html" %}
 {% block content %}
-<h1>We're getting married!</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Find my invite">
-</form>
-{% if matches is not None %}
-    {% if matches %}
-        <p>There's more than one guest with that name, please get in touch with us...</p>
+<div class="card">
+    <h1>We're getting married!</h1>
+    <p>Please enter your name as it appears on your invite - only one name per invite needs to be entered.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Find my invite">
+    </form>
+    {% if matches is not None %}
+        {% if matches %}
+            <p>There's more than one guest with that name. Get in touch and we'll sort it out.</p>
+        {% else %}
+            <p>Sorry, we couldn't find that name. Check the spelling, or get in touch with us.</p>
+        {% endif %}
     {% else %}
-        <p>Sorry we couldn't find you, please get in touch with us...</p>
+        <p>Can't find your name? Get in touch with us!</p>
     {% endif %}
-{% endif %}
-
+</div>
 {% endblock %}
